@@ -3,7 +3,6 @@ const loadData = async() =>{
     const url =`https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data.tools);
     allData = data.data.tools;
     const arr = data.data.tools.slice(0,6)
     render(arr)
@@ -17,7 +16,7 @@ seeMoreBtn.addEventListener('click',()=>{
 
 let tool= {}
 
-async function  loadDataById(id) {
+const  loadDataById = async id =>{
     const Detailsurl = `https://openapi.programming-hero.com/api/ai/tool/${id}`
     const rest = await fetch(Detailsurl);
     const detailData  = await rest.json();
@@ -27,38 +26,50 @@ async function  loadDataById(id) {
     const title = document.getElementById('model-title')
     title.innerHTML = `
         <div class="d-flex gap-4">
-            <div class="card w-100 p-4 bg-danger-subtle">
+            <div class="card w-100 p-4 bg-danger-subtle rounded-4 border-danger ">
                 <h4 class="text-justify">${tool.description}</h4>
-                <div class="d-flex justify-content-between text-center  gap-3 mt-3">
-                    <div class=" px-3 py-4 bg-white rounded w-50">
-                        <h5 class="text-success">$10/month
-                        Basic</h5>
+                <div class="d-flex justify-content-between text-center  gap-2 mt-3">
+                    <div class=" p-3 bg-white rounded d-flex justify-content-center align-items-center w-25">
+                        <h5 class="text-success fs-6">${tool.pricing[0].price ? tool.pricing[0].price :'dibo na tore'} ${tool.pricing[0].plan}</h5>
                     </div>
-                    <div class="px-3 py-4 bg-white rounded w-50">
-                        <h5 class="text-warning">$50/month
-                        Pro</h5>
+                    <div class="p-3 bg-white rounded d-flex justify-content-center align-items-center w-25">
+                        <h5 class="text-warning fs-6">${tool.pricing[1].price} ${tool.pricing[1].plan}</h5>
                     </div>
-                    <div class="px-3 py-4 bg-white rounded w-50">
-                        <h5 class="text-danger">Contact 
-                        us
-                        Enterprise</h5>
+                    <div class="p-3 bg-white rounded d-flex justify-content-center align-items-center w-25">
+                        <h5 class="text-danger fs-6">${tool.pricing[2].price} ${tool.pricing[1].plan}</h5> 
+                    </div>
+                </div>
+
+                <div class="mt-5 d-flex gap-5">
+                    <div>
+                         <h4>Features</h4>
+                         <ul class="mt-3 text-body-secondary fs-6">
+                            <li>${tool.features[1].feature_name }</li>
+                            <li>${tool.features[2].feature_name }</li>
+                            <li>${tool.features[3].feature_name }</li>
+                            
+                         </ul>
+                    </div>
+                    <div>
+                        <h4>Integrations</h4>
+                        <ul class="mt-3 text-body-secondary fs-6" >
+                            <li>${tool.integrations[0] ? tool.integrations[0] : 'No data Found'}</li>
+                            <li>${tool.integrations[1] ? tool.integrations[1] : 'No data Found'}</li>
+                            <li>${tool.integrations[2] ? tool.integrations[2] : 'No data Found'}</li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="d-flex gap-4">
-                    <div>
-                        
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
             </div>
-                <div class="card w-100">
-                    <img src="${tool.logo}" class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="border rounded-4 p-4  ">
+                <div class="card w-100 border-0">
+                    <img src="${tool.image_link[0]}" class="card-img-top rounded-4  " alt="...">
+                </div>
+                <div class="text-center  mt-3  mx-auto">
+                    <h3 class=" text-center">${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : tool.input_output_examples[1].input}</h3>
+                    <p class="mt-3 px-4">${tool.input_output_examples[0].output ? tool.input_output_examples[0].output : tool.input_output_examples[1].output}</p>
+                </div>
+                
             </div>
         </div>
     `
